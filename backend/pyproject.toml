@@ -1,0 +1,19 @@
+[project]
+name = "ckan-site-search-backend"
+version = "0.1.0"
+description = "Unified search API for multiple CKAN sites"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "pydantic-settings>=2.7",
+    "httpx>=0.28",
+    "ckanapi>=4.11",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.25",
+    "ruff>=0.9",
+]

@@ -1,0 +1,39 @@
+<div class="results-page">
+  <div class="results-header">
+    <span class="results-logo" routerLink="/">AVRE Catalogue Search</span>
+    <app-search-bar [query]="query" (searchSubmit)="onSearch($event)" />
+  </div>
+
+  @if (loading) {
+    <p class="results-status">Searching…</p>
+  }
+
+  @if (error) {
+    <p class="results-status results-error">{{ error }}</p>
+  }
+
+  @if (!loading && !error && results.length > 0) {
+    <p class="results-count">{{ total }} results found</p>
+    <ul class="results-list">
+      @for (item of results; track item.id) {
+        <li class="result-item">
+          <span class="result-source">{{ item.source.label }}</span>
+          <h3 class="result-title">
+            @if (item.url) {
+              <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
+            } @else {
+              {{ item.title }}
+            }
+          </h3>
+          @if (item.description) {
+            <p class="result-description">{{ item.description }}</p>
+          }
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!loading && !error && results.length === 0 && query) {
+    <p class="results-status">No results found for "{{ query }}"</p>
+  }
+</div>
