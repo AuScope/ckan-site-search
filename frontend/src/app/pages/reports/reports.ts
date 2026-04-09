@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { SourceStats } from '../../models/search';
@@ -20,7 +20,7 @@ export class Reports implements OnInit {
     pidinst_repo: 'var(--color-instrument)',
   };
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.api.getStats().subscribe({
@@ -28,9 +28,11 @@ export class Reports implements OnInit {
         this.stats = res.sources;
         this.totalRecords = res.total;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { SearchBar } from '../../components/search-bar/search-bar';
@@ -29,7 +29,7 @@ export class CataloguePage implements OnInit {
   facets: Record<string, FacetItem[]> = {};
   filters: FilterState = this.defaultFilters();
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.filters.repository = this.sourceKey;
@@ -82,10 +82,12 @@ export class CataloguePage implements OnInit {
         this.total = response.total;
         this.facets = response.facets || {};
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.error = 'Failed to load records. Please try again.';
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }

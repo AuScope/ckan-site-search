@@ -19,12 +19,13 @@
       </div>
 
       <div class="filter-group">
-        <label class="filter-label">Date Range</label>
-        <div class="filter-row">
-          <input type="date" [(ngModel)]="filters.dateFrom" class="filter-input" placeholder="From" />
-          <span class="filter-sep">to</span>
-          <input type="date" [(ngModel)]="filters.dateTo" class="filter-input" placeholder="To" />
-        </div>
+        <label class="filter-label">Date From</label>
+        <input type="date" [(ngModel)]="filters.dateFrom" class="filter-input" />
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Date To</label>
+        <input type="date" [(ngModel)]="filters.dateTo" class="filter-input" />
       </div>
 
       <div class="filter-group">

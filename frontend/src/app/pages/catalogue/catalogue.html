@@ -1,12 +1,7 @@
 <div class="catalogue-page">
   <div class="catalogue-header">
-    <div class="catalogue-title-bar">
-      <div>
-        <h1 class="catalogue-title">{{ pageTitle }}</h1>
-        <p class="catalogue-desc">{{ pageDescription }}</p>
-      </div>
-      <span class="catalogue-total">{{ total | number }} records</span>
-    </div>
+    <h1 class="catalogue-title">{{ pageTitle }} <span class="catalogue-count">({{ total | number }})</span></h1>
+    <p class="catalogue-desc">{{ pageDescription }}</p>
     <div class="catalogue-search">
       <app-search-bar
         [query]="query"

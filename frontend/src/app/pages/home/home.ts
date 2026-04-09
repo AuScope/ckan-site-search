@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { SearchBar } from '../../components/search-bar/search-bar';
@@ -25,10 +25,13 @@ export class Home implements OnInit {
     { key: 'sample_repo', label: 'Samples', route: '/samples', icon: '🪨', description: 'Physical samples including core, soil, and geological specimens.', color: 'var(--color-sample)' },
   ];
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.api.getStats().subscribe(res => this.stats = res.sources);
+    this.api.getStats().subscribe(res => {
+      this.stats = res.sources;
+      this.cdr.detectChanges();
+    });
   }
 
   getCount(key: string): number {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { SearchBar } from '../../components/search-bar/search-bar';
@@ -35,6 +35,7 @@ export class Results implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private api: ApiService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -98,10 +99,12 @@ export class Results implements OnInit {
         this.total = response.total;
         this.facets = response.facets || {};
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.error = 'Search failed. Please try again.';
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }
