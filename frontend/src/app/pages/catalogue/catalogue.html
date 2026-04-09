@@ -1,0 +1,80 @@
+<div class="catalogue-page">
+  <div class="catalogue-header">
+    <div class="catalogue-title-bar">
+      <div>
+        <h1 class="catalogue-title">{{ pageTitle }}</h1>
+        <p class="catalogue-desc">{{ pageDescription }}</p>
+      </div>
+      <span class="catalogue-total">{{ total | number }} records</span>
+    </div>
+    <div class="catalogue-search">
+      <app-search-bar
+        [query]="query"
+        [compact]="true"
+        (searchSubmit)="onSearch($event)"
+      />
+    </div>
+  </div>
+
+  <div class="catalogue-body">
+    <aside class="catalogue-sidebar">
+      <app-filter-dialog
+        [filters]="filters"
+        [facets]="facets"
+        mode="sidebar"
+        (apply)="onFilterApply($event)"
+      />
+    </aside>
+
+    <main class="catalogue-main">
+      @if (loading) {
+        <div class="catalogue-loading">
+          <div class="loading-bar"></div>
+          <p>Loading records…</p>
+        </div>
+      }
+
+      @if (error) {
+        <p class="catalogue-error">{{ error }}</p>
+      }
+
+      @if (!loading && !error) {
+        @if (results.length > 0) {
+          <ul class="catalogue-list">
+            @for (item of results; track item.id) {
+              <li class="catalogue-item">
+                <div class="item-header">
+                  <span class="badge" [class]="badgeClass">{{ item.source.label }}</span>
+                  @if (item.doi_url) {
+                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="item-doi">DOI: {{ item.doi }}</a>
+                  }
+                </div>
+                <h3 class="item-title">
+                  @if (item.url) {
+                    <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
+                  } @else {
+                    {{ item.title }}
+                  }
+                </h3>
+                @if (item.description) {
+                  <p class="item-desc">{{ truncate(item.description) }}</p>
+                }
+              </li>
+            }
+          </ul>
+
+          <app-pagination
+            [total]="total"
+            [page]="page"
+            [pageSize]="pageSize"
+            (pageChange)="onPageChange($event)"
+          />
+        } @else {
+          <div class="catalogue-empty">
+            <p>No records found. Try adjusting your search or filters.</p>
+          </div>
+        }
+      }
+    </main>
+  </div>
+</div>

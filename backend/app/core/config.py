@@ -9,6 +9,7 @@ class SourceConfig(BaseModel):
     api_key: str | None = None
     source_type: str = "ckan"
     dataset_type: str | None = "dataset"
+    base_doi_url: str | None = None
     enabled: bool = True
 
 
@@ -23,18 +24,21 @@ class Settings(BaseSettings):
             label="Sample Repository",
             base_url="https://sample-dev.data.auscope.org.au/",
             dataset_type="dataset",
+            base_doi_url="https://handle.test.datacite.org/"
         ),
         SourceConfig(
             key="data_repo",
             label="Data Repository",
             base_url="https://repository-dev.data.auscope.org.au/",
             dataset_type="dataset",
+            base_doi_url="https://handle.test.datacite.org/"
         ),
         SourceConfig(
             key="pidinst_repo",
             label="PIDInst Repository",
             base_url="https://pidinst-dev.data.auscope.org.au/",
             dataset_type="instrument",
+            base_doi_url="https://handle.test.datacite.org/"
         ),
     ]
 

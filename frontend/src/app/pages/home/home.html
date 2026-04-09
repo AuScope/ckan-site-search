@@ -1,5 +1,40 @@
 <div class="home">
-  <h1 class="home-title">AVRE Catalogue Search</h1>
-  <p class="home-subtitle">Search across multiple data repositories</p>
-  <app-search-bar (searchSubmit)="onSearch($event)" />
+  <section class="hero">
+    <h1 class="hero-title">{{ appTitle }}</h1>
+    <p class="hero-subtitle">Discover datasets, instruments, and samples from AuScope repositories</p>
+    <div class="hero-search">
+      <app-search-bar
+        [showFilterButton]="true"
+        (searchSubmit)="onSearch($event)"
+        (filterClick)="showFilters = true"
+      />
+    </div>
+  </section>
+
+  <section class="catalogues">
+    <div class="catalogues-grid">
+      @for (cat of catalogues; track cat.key) {
+        <div class="catalogue-card" (click)="navigateCatalogue(cat.route)">
+          <div class="card-accent" [style.background]="cat.color"></div>
+          <div class="card-body">
+            <div class="card-icon">{{ cat.icon }}</div>
+            <h3 class="card-title">{{ cat.label }}</h3>
+            <p class="card-desc">{{ cat.description }}</p>
+            <div class="card-stat">
+              <span class="stat-number">{{ getCount(cat.key) | number }}</span>
+              <span class="stat-label">records</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
 </div>
+
+@if (showFilters) {
+  <app-filter-dialog
+    [filters]="filters"
+    (apply)="onFilterApply($event)"
+    (close)="showFilters = false"
+  />
+}

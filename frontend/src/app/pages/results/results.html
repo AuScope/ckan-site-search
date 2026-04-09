@@ -1,39 +1,86 @@
 <div class="results-page">
   <div class="results-header">
-    <span class="results-logo" routerLink="/">AVRE Catalogue Search</span>
-    <app-search-bar [query]="query" (searchSubmit)="onSearch($event)" />
+    <a class="results-logo" routerLink="/">AVRE Catalogue Search</a>
+    <div class="results-search">
+      <app-search-bar
+        [query]="query === '*:*' ? '' : query"
+        [compact]="true"
+        [showFilterButton]="true"
+        (searchSubmit)="onSearch($event)"
+        (filterClick)="showMobileFilters = !showMobileFilters"
+      />
+    </div>
   </div>
 
-  @if (loading) {
-    <p class="results-status">Searching…</p>
-  }
+  <div class="results-body">
+    <aside class="results-sidebar" [class.mobile-open]="showMobileFilters">
+      <app-filter-dialog
+        [filters]="filters"
+        [facets]="facets"
+        mode="sidebar"
+        (apply)="onFilterApply($event)"
+      />
+    </aside>
 
-  @if (error) {
-    <p class="results-status results-error">{{ error }}</p>
-  }
-
-  @if (!loading && !error && results.length > 0) {
-    <p class="results-count">{{ total }} results found</p>
-    <ul class="results-list">
-      @for (item of results; track item.id) {
-        <li class="result-item">
-          <span class="result-source">{{ item.source.label }}</span>
-          <h3 class="result-title">
-            @if (item.url) {
-              <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
-            } @else {
-              {{ item.title }}
-            }
-          </h3>
-          @if (item.description) {
-            <p class="result-description">{{ item.description }}</p>
-          }
-        </li>
+    <main class="results-main">
+      @if (loading) {
+        <div class="results-loading">
+          <div class="loading-bar"></div>
+          <p>Searching across repositories…</p>
+        </div>
       }
-    </ul>
-  }
 
-  @if (!loading && !error && results.length === 0 && query) {
-    <p class="results-status">No results found for "{{ query }}"</p>
-  }
+      @if (error) {
+        <p class="results-status results-error">{{ error }}</p>
+      }
+
+      @if (!loading && !error) {
+        <div class="results-info">
+          <span class="results-count">{{ total | number }} results</span>
+          @if (query && query !== '*:*') {
+            <span class="results-query">for <strong>"{{ query }}"</strong></span>
+          }
+        </div>
+
+        @if (results.length > 0) {
+          <ul class="results-list">
+            @for (item of results; track item.id) {
+              <li class="result-item">
+                <div class="result-meta">
+                  <span class="badge" [class]="getBadgeClass(item.source.key)">{{ item.source.label }}</span>
+                  @if (item.doi_url) {
+                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="result-doi">DOI: {{ item.doi }}</a>
+                  }
+                </div>
+                <h3 class="result-title">
+                  @if (item.url) {
+                    <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
+                  } @else {
+                    {{ item.title }}
+                  }
+                </h3>
+                @if (item.description) {
+                  <p class="result-description">{{ truncate(item.description) }}</p>
+                }
+                @if (item.url) {
+                  <span class="result-url">{{ item.url }}</span>
+                }
+              </li>
+            }
+          </ul>
+
+          <app-pagination
+            [total]="total"
+            [page]="page"
+            [pageSize]="pageSize"
+            (pageChange)="onPageChange($event)"
+          />
+        } @else {
+          <div class="results-empty">
+            <p>No results found. Try broadening your search or adjusting the filters.</p>
+          </div>
+        }
+      }
+    </main>
+  </div>
 </div>

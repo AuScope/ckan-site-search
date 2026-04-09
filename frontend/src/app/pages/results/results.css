@@ -1,41 +1,121 @@
 .results-page {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
 }
 
+/* Header bar */
 .results-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eee;
+  gap: 20px;
+  padding: 12px 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 56px;
+  z-index: 99;
 }
 
 .results-logo {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #2e2b8a;
-  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-primary);
   white-space: nowrap;
+  text-decoration: none;
+}
+
+.results-logo:hover {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.results-search {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* Body layout */
+.results-body {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+}
+
+.results-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  padding: 20px 20px 20px 0;
+}
+
+.results-main {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 0 20px 20px;
+  border-left: 1px solid var(--color-border-light);
+}
+
+/* Info bar */
+.results-info {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 4px;
 }
 
 .results-count {
-  font-size: 0.85rem;
-  color: #666;
-  margin: 0 0 16px;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
+.results-query {
+  margin-left: 4px;
+}
+
+/* Loading */
+.results-loading {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-text-secondary);
+}
+
+.loading-bar {
+  width: 200px;
+  height: 3px;
+  background: var(--color-border-light);
+  margin: 0 auto 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: var(--color-primary);
+  animation: loading-slide 1s ease-in-out infinite;
+}
+
+@keyframes loading-slide {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
+
+/* Status & Error */
 .results-status {
-  color: #666;
-  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  padding: 24px 0;
 }
 
 .results-error {
-  color: #d93025;
+  color: var(--color-error);
 }
 
+/* Results list */
 .results-list {
   list-style: none;
   padding: 0;
@@ -43,24 +123,33 @@
 }
 
 .result-item {
-  padding: 16px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
-.result-source {
-  display: inline-block;
-  font-size: 0.75rem;
-  color: #fff;
-  background: #5f6368;
-  padding: 2px 8px;
-  border-radius: 3px;
-  margin-bottom: 4px;
+.result-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.result-doi {
+  font-size: 12px;
+  color: var(--color-primary-light);
+  text-decoration: none;
+  font-family: monospace;
+}
+
+.result-doi:hover {
+  text-decoration: underline;
 }
 
 .result-title {
-  margin: 4px 0;
-  font-size: 1.1rem;
+  margin: 4px 0 6px;
+  font-size: 18px;
   font-weight: 400;
+  line-height: 1.3;
 }
 
 .result-title a {
@@ -73,8 +162,57 @@
 }
 
 .result-description {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  color: #545454;
-  line-height: 1.5;
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.result-url {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-success);
+  word-break: break-all;
+}
+
+/* Empty state */
+.results-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .results-header {
+    flex-wrap: wrap;
+  }
+
+  .results-search {
+    max-width: 100%;
+    width: 100%;
+    order: 2;
+  }
+
+  .results-body {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+
+  .results-sidebar {
+    width: 100%;
+    padding: 16px 0;
+    display: none;
+  }
+
+  .results-sidebar.mobile-open {
+    display: block;
+  }
+
+  .results-main {
+    padding: 16px 0;
+    border-left: none;
+  }
 }

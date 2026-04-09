@@ -1,0 +1,75 @@
+<div class="reports-page">
+  <div class="reports-header">
+    <h1 class="reports-title">Reports & Statistics</h1>
+    <p class="reports-subtitle">Overview of records across all AuScope repositories</p>
+  </div>
+
+  @if (loading) {
+    <div class="reports-loading"><p>Loading statistics…</p></div>
+  }
+
+  @if (!loading) {
+    <div class="reports-grid">
+      <!-- Total overview card -->
+      <div class="report-card report-card-wide">
+        <h2 class="card-heading">Total Records</h2>
+        <div class="total-number">{{ totalRecords | number }}</div>
+        <p class="card-note">Across all {{ stats.length }} repositories</p>
+      </div>
+
+      <!-- Per-source cards -->
+      @for (source of stats; track source.key) {
+        <div class="report-card">
+          <div class="card-color-bar" [style.background]="getColor(source.key)"></div>
+          <h3 class="card-heading">{{ source.label }}</h3>
+          <div class="card-count">{{ source.count | number }}</div>
+          <div class="card-percentage">{{ getPercentage(source.count) | number:'1.1-1' }}% of total</div>
+        </div>
+      }
+
+      <!-- Bar chart card -->
+      <div class="report-card report-card-wide">
+        <h2 class="card-heading">Records Distribution</h2>
+        <div class="bar-chart">
+          @for (source of stats; track source.key) {
+            <div class="bar-row">
+              <span class="bar-label">{{ source.label }}</span>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  [style.width.%]="getPercentage(source.count)"
+                  [style.background]="getColor(source.key)"
+                ></div>
+              </div>
+              <span class="bar-value">{{ source.count | number }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Proportional chart card -->
+      <div class="report-card report-card-wide">
+        <h2 class="card-heading">Share of Records</h2>
+        <div class="proportion-bar">
+          @for (source of stats; track source.key) {
+            <div
+              class="proportion-segment"
+              [style.flex-grow]="source.count"
+              [style.background]="getColor(source.key)"
+              [title]="source.label + ': ' + source.count"
+            ></div>
+          }
+        </div>
+        <div class="proportion-legend">
+          @for (source of stats; track source.key) {
+            <div class="legend-item">
+              <span class="legend-dot" [style.background]="getColor(source.key)"></span>
+              <span>{{ source.label }}</span>
+              <span class="legend-pct">{{ getPercentage(source.count) | number:'1.1-1' }}%</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

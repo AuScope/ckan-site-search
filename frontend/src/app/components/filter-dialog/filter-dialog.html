@@ -1,0 +1,71 @@
+<div class="filter-backdrop" [class.sidebar-mode]="mode === 'sidebar'" (click)="close.emit()">
+  <div class="filter-panel" [class.sidebar-panel]="mode === 'sidebar'" (click)="$event.stopPropagation()">
+    <div class="filter-header">
+      <h3>Filters</h3>
+      @if (mode === 'overlay') {
+        <button class="filter-close" (click)="close.emit()">✕</button>
+      }
+    </div>
+
+    <div class="filter-body">
+      <div class="filter-group">
+        <label class="filter-label">Repository</label>
+        <select [(ngModel)]="filters.repository" class="filter-select">
+          <option value="">All Repositories</option>
+          <option value="data_repo">Data Repository</option>
+          <option value="sample_repo">Sample Repository</option>
+          <option value="pidinst_repo">Instrument Repository</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Date Range</label>
+        <div class="filter-row">
+          <input type="date" [(ngModel)]="filters.dateFrom" class="filter-input" placeholder="From" />
+          <span class="filter-sep">to</span>
+          <input type="date" [(ngModel)]="filters.dateTo" class="filter-input" placeholder="To" />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Location</label>
+        <select [(ngModel)]="filters.locationChoice" class="filter-select">
+          <option value="">Any</option>
+          <option value="point">Point</option>
+          <option value="area">Area</option>
+          <option value="noLocation">No Location</option>
+        </select>
+      </div>
+
+      @if (!filters.repository || filters.repository === 'sample_repo') {
+        <div class="filter-group">
+          <label class="filter-label">Sample Type</label>
+          <input type="text" [(ngModel)]="filters.sampleType" class="filter-input" placeholder="e.g. Surface Soil" />
+        </div>
+      }
+
+      @if (!filters.repository || filters.repository === 'data_repo') {
+        <div class="filter-group">
+          <label class="filter-label">Resource Type</label>
+          <input type="text" [(ngModel)]="filters.resourceType" class="filter-input" placeholder="e.g. dataset" />
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Field of Research</label>
+          <input type="text" [(ngModel)]="filters.fieldsOfResearch" class="filter-input" placeholder="e.g. Geothermics" />
+        </div>
+      }
+
+      @if (!filters.repository || filters.repository === 'pidinst_repo') {
+        <div class="filter-group">
+          <label class="filter-label">Instrument Classification</label>
+          <input type="text" [(ngModel)]="filters.instrumentClassification" class="filter-input" placeholder="e.g. Geophysics" />
+        </div>
+      }
+    </div>
+
+    <div class="filter-footer">
+      <button class="btn btn-outline" (click)="onClear()">Clear All</button>
+      <button class="btn btn-primary" (click)="onApply()">Apply Filters</button>
+    </div>
+  </div>
+</div>

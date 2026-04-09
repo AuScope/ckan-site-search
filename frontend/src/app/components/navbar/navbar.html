@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-left">
+      <a routerLink="/" class="navbar-brand">
+        <img src="assets/logos/AuScope Logo – Reversed.png" alt="AuScope" class="navbar-logo" />
+      </a>
+      <div class="navbar-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/datasets" routerLinkActive="active">Datasets</a>
+        <a routerLink="/instruments" routerLinkActive="active">Instruments</a>
+        <a routerLink="/samples" routerLinkActive="active">Samples</a>
+        <a routerLink="/reports" routerLinkActive="active">Reports</a>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <div class="login-dropdown" (mouseleave)="closeLoginMenu()">
+        <button class="navbar-action" (click)="toggleLoginMenu()">
+          Log In ▾
+        </button>
+        @if (loginMenuOpen) {
+          <div class="dropdown-menu">
+            @for (opt of loginOptions; track opt.label) {
+              <a [href]="opt.url" target="_blank" rel="noopener" class="dropdown-item">{{ opt.label }}</a>
+            }
+          </div>
+        }
+      </div>
+      <a href="mailto:help@data.auscope.org.au" class="navbar-action">Contact Us</a>
+    </div>
+  </div>
+</nav>

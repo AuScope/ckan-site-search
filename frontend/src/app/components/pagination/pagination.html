@@ -1,0 +1,13 @@
+@if (totalPages > 1) {
+  <nav class="pagination">
+    <button class="page-btn" [disabled]="page === 1" (click)="goTo(page - 1)">← Prev</button>
+    @for (p of pages; track p) {
+      @if (p < 0) {
+        <span class="page-ellipsis">…</span>
+      } @else {
+        <button class="page-btn" [class.active]="p === page" (click)="goTo(p)">{{ p }}</button>
+      }
+    }
+    <button class="page-btn" [disabled]="page === totalPages" (click)="goTo(page + 1)">Next →</button>
+  </nav>
+}
