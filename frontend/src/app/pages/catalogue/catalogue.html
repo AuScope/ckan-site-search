@@ -35,16 +35,19 @@
 
       @if (!loading && !error) {
         @if (results.length > 0) {
-          <ul class="catalogue-list">
+          <ul class="record-list">
             @for (item of results; track item.id) {
-              <li class="catalogue-item">
-                <div class="item-header">
+              <li class="record-item">
+                <div class="record-meta">
                   <span class="badge" [class]="badgeClass">{{ item.source.label }}</span>
+                  @if (item.source.environment && item.source.environment !== 'prod') {
+                    <span class="env-badge env-{{ item.source.environment }}">{{ item.source.environment }}</span>
+                  }
                   @if (item.doi_url) {
-                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="item-doi">DOI: {{ item.doi }}</a>
+                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="record-doi">DOI: {{ item.doi }}</a>
                   }
                 </div>
-                <h3 class="item-title">
+                <h3 class="record-title">
                   @if (item.url) {
                     <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
                   } @else {
@@ -52,7 +55,7 @@
                   }
                 </h3>
                 @if (item.description) {
-                  <p class="item-desc">{{ truncate(item.description) }}</p>
+                  <p class="record-desc">{{ truncate(item.description) }}</p>
                 }
               </li>
             }
@@ -65,7 +68,7 @@
             (pageChange)="onPageChange($event)"
           />
         } @else {
-          <div class="catalogue-empty">
+          <div class="record-empty">
             <p>No records found. Try adjusting your search or filters.</p>
           </div>
         }

@@ -20,7 +20,7 @@ class CkanSource(RemoteCKAN):
 
     @property
     def meta(self) -> SourceMeta:
-        return SourceMeta(key=self.key, label=self.label)
+        return SourceMeta(key=self.key, label=self.label, environment=self.cfg.environment.value)
 
     def build_url(self, package_name: str) -> str:
         base = self.cfg.base_url.rstrip("/")

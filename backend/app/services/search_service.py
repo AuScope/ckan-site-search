@@ -56,7 +56,8 @@ class SearchService:
         total = 0
         for i, result in enumerate(results):
             count = result if isinstance(result, int) else 0
-            stats.append(SourceStats(key=tasks[i][0], label=tasks[i][1], count=count))
+            source = source_registry.get_sources(key=tasks[i][0])[0]
+            stats.append(SourceStats(key=tasks[i][0], label=tasks[i][1], count=count, environment=source.cfg.environment.value))
             total += count
 
         return StatsResponse(sources=stats, total=total)

@@ -72,6 +72,9 @@
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .card-desc {

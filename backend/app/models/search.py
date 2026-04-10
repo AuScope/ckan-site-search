@@ -18,6 +18,7 @@ class SearchRequest(BaseModel):
 class SourceMeta(BaseModel):
     key: str
     label: str
+    environment: str
 
 
 class SearchResultItem(BaseModel):
@@ -49,6 +50,7 @@ class SourceStats(BaseModel):
     key: str
     label: str
     count: int
+    environment: str
 
 
 class StatsResponse(BaseModel):

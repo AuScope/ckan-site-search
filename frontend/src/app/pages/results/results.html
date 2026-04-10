@@ -43,16 +43,19 @@
         </div>
 
         @if (results.length > 0) {
-          <ul class="results-list">
+          <ul class="record-list">
             @for (item of results; track item.id) {
-              <li class="result-item">
-                <div class="result-meta">
+              <li class="record-item">
+                <div class="record-meta">
                   <span class="badge" [class]="getBadgeClass(item.source.key)">{{ item.source.label }}</span>
+                  @if (item.source.environment && item.source.environment !== 'prod') {
+                    <span class="env-badge env-{{ item.source.environment }}">{{ item.source.environment }}</span>
+                  }
                   @if (item.doi_url) {
-                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="result-doi">DOI: {{ item.doi }}</a>
+                    <a [href]="item.doi_url" target="_blank" rel="noopener" class="record-doi">DOI: {{ item.doi }}</a>
                   }
                 </div>
-                <h3 class="result-title">
+                <h3 class="record-title">
                   @if (item.url) {
                     <a [href]="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
                   } @else {
@@ -60,10 +63,10 @@
                   }
                 </h3>
                 @if (item.description) {
-                  <p class="result-description">{{ truncate(item.description) }}</p>
+                  <p class="record-desc">{{ truncate(item.description) }}</p>
                 }
                 @if (item.url) {
-                  <span class="result-url">{{ item.url }}</span>
+                  <span class="record-url">{{ item.url }}</span>
                 }
               </li>
             }
@@ -76,7 +79,7 @@
             (pageChange)="onPageChange($event)"
           />
         } @else {
-          <div class="results-empty">
+          <div class="record-empty">
             <p>No results found. Try broadening your search or adjusting the filters.</p>
           </div>
         }

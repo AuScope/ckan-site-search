@@ -18,7 +18,12 @@
           <div class="card-accent" [style.background]="cat.color"></div>
           <div class="card-body">
             <div class="card-icon">{{ cat.icon }}</div>
-            <h3 class="card-title">{{ cat.label }}</h3>
+            <h3 class="card-title">
+              {{ cat.label }}
+              @if (getEnvironment(cat.key) && getEnvironment(cat.key) !== 'prod') {
+                <span class="env-badge env-{{ getEnvironment(cat.key) }}">{{ getEnvironment(cat.key) }}</span>
+              }
+            </h3>
             <p class="card-desc">{{ cat.description }}</p>
             <div class="card-stat">
               <span class="stat-number">{{ getCount(cat.key) | number }}</span>

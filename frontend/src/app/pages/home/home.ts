@@ -34,6 +34,10 @@ export class Home implements OnInit {
     });
   }
 
+  getEnvironment(key: string): string {
+    return this.stats.find(s => s.key === key)?.environment ?? '';
+  }
+
   getCount(key: string): number {
     return this.stats.find(s => s.key === key)?.count ?? 0;
   }

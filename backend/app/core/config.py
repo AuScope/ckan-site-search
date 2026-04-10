@@ -1,5 +1,11 @@
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings
+from enum import Enum
+
+class Environment(str, Enum):
+    DEV = "dev"
+    STAGING = "staging"
+    PROD = "prod"
 
 
 class SourceConfig(BaseModel):
@@ -11,6 +17,7 @@ class SourceConfig(BaseModel):
     dataset_type: str | None = "dataset"
     base_doi_url: str | None = None
     enabled: bool = True
+    environment: Environment = Environment.DEV
 
 
 class Settings(BaseSettings):
@@ -24,21 +31,24 @@ class Settings(BaseSettings):
             label="Sample Repository",
             base_url="https://sample-dev.data.auscope.org.au/",
             dataset_type="dataset",
-            base_doi_url="https://handle.test.datacite.org/"
+            base_doi_url="https://handle.test.datacite.org/",
+            environment=Environment.DEV,
         ),
         SourceConfig(
             key="data_repo",
             label="Data Repository",
-            base_url="https://repository-dev.data.auscope.org.au/",
+            base_url="https://repository.data.auscope.org.au/",
             dataset_type="dataset",
-            base_doi_url="https://handle.test.datacite.org/"
+            base_doi_url="https://doi.org/",
+            environment=Environment.PROD,
         ),
         SourceConfig(
             key="pidinst_repo",
             label="PIDInst Repository",
             base_url="https://pidinst-dev.data.auscope.org.au/",
             dataset_type="instrument",
-            base_doi_url="https://handle.test.datacite.org/"
+            base_doi_url="https://handle.test.datacite.org/",
+            environment=Environment.DEV,
         ),
     ]
 

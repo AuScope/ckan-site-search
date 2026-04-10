@@ -1,6 +1,7 @@
 export interface SourceMeta {
   key: string;
   label: string;
+  environment: string;
 }
 
 export interface SearchResultItem {
@@ -46,6 +47,7 @@ export interface SourceStats {
   key: string;
   label: string;
   count: number;
+  environment: string;
 }
 
 export interface StatsResponse {
