@@ -6,11 +6,11 @@ FastAPI application providing a unified search API across multiple CKAN data por
 
 ```bash
 uv sync
-uv run uvicorn app.main:app --reload
+uv run uvicorn app.main:app --reload --port 8080
 ```
 
-API: http://localhost:8000  
-Docs: http://localhost:8000/docs
+API: http://localhost:8080/api/v1  
+Docs: http://localhost:8080/api/v1/docs
 
 ## Project Structure
 

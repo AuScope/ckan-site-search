@@ -24,15 +24,17 @@ class Settings(BaseSettings):
     app_name: str = "CKAN Site Search API"
     debug: bool = False
     cors_origins: list[str] = ["http://localhost:4200"]
+    # Directory containing the built Angular app. When set, the API also serves the frontend.
+    frontend_dir: str | None = None
 
     sources: list[SourceConfig] = [
         SourceConfig(
             key="sample_repo",
             label="Sample Repository",
-            base_url="https://sample-dev.data.auscope.org.au/",
+            base_url="https://sample.data.auscope.org.au/",
             dataset_type="dataset",
-            base_doi_url="https://handle.test.datacite.org/",
-            environment=Environment.DEV,
+            base_doi_url="https://doi.org/",
+            environment=Environment.PROD,
         ),
         SourceConfig(
             key="data_repo",
@@ -45,10 +47,10 @@ class Settings(BaseSettings):
         SourceConfig(
             key="pidinst_repo",
             label="PIDInst Repository",
-            base_url="https://pidinst-dev.data.auscope.org.au/",
+            base_url="https://pidinst.data.auscope.org.au/",
             dataset_type="instrument",
-            base_doi_url="https://handle.test.datacite.org/",
-            environment=Environment.DEV,
+            base_doi_url="https://doi.org/",
+            environment=Environment.PROD,
         ),
     ]
 

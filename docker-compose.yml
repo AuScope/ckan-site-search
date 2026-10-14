@@ -1,0 +1,11 @@
+services:
+  app:
+    image: ghcr.io/auscope/ckan-site-search:latest
+    build:
+      context: .
+    ports:
+      - "${PORT:-8080}:8080"
+    env_file:
+      - path: ./backend/.env
+        required: false
+    restart: unless-stopped
