@@ -13,9 +13,9 @@ export class Navbar {
   loginMenuOpen = false;
 
   loginOptions = [
-    { label: 'Data Repository', url: 'https://repository-dev.data.auscope.org.au/user/login' },
-    { label: 'Sample Repository', url: 'https://sample-dev.data.auscope.org.au/user/login' },
-    { label: 'Instrument Repository', url: 'https://pidinst-dev.data.auscope.org.au/user/login' },
+    { label: 'Data Repository', url: 'https://repository.data.auscope.org.au/user/login' },
+    { label: 'Sample Repository', url: 'https://sample.data.auscope.org.au/user/login' },
+    { label: 'Instrument Repository', url: 'https://pidinst.data.auscope.org.au/user/login' },
   ];
 
   toggleLoginMenu(): void {
